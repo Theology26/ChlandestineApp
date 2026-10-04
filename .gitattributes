@@ -1,0 +1,30 @@
+# Normalisasi line ending agar diff tidak berantakan antar Windows/Linux.
+* text=auto
+
+*.py    text diff=python
+*.php   text diff=php
+*.md    text
+*.txt   text
+*.json  text
+*.yaml  text
+*.yml   text
+*.css   text
+*.bat   text eol=crlf
+*.cmd   text eol=crlf
+
+# Bentuk biner: jangan pernah di-normalisasi
+*.pt    binary
+*.pth   binary
+*.bin   binary
+*.safetensors binary
+*.onnx  binary
+*.jpg   binary
+*.jpeg  binary
+*.png   binary
+*.gif   binary
+*.ico   binary
+*.pdf   binary
+*.sql   binary
+
+# Build spec PyInstaller
+*.spec  text

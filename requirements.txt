@@ -1,0 +1,39 @@
+# Environment Chlandestine yang BENAR-BENAR jalan (Windows + NVIDIA RTX 50xx)
+#
+# Catatan penting soal torch:
+#   GPU laptop ini RTX 5050 = Blackwell sm_120.
+#   Build cu118 (torch 2.1.x) hanya mendukung sampai sm_90, jadi TIDAK akan
+#   jalan di sini. Yang dipakai adalah torch 2.11 + cu128 (mendukung sm_120).
+
+# --- PyTorch (wajib dari index cu128) ---
+# pip install torch torchvision --index-url https://download.pytorch.org/whl/cu128
+torch>=2.7,<3
+torchvision>=0.22,<1
+
+# --- Vision / deteksi ---
+ultralytics>=8.3
+opencv-python>=4.10,<5
+numpy>=1.26,<2          # easyocr 1.7.2 belum kompatibel numpy 2.x
+Pillow>=10
+
+# --- OCR ---
+easyocr==1.7.2
+
+# --- Translasi lokal (NLLB-200, jalan offline di GPU) ---
+transformers>=4.44
+sentencepiece>=0.2
+sacremoses>=0.1
+
+# --- Web service ---
+fastapi>=0.115
+uvicorn[standard]>=0.30
+python-multipart>=0.0.20   # wajib untuk FastAPI UploadFile/File
+
+# --- Desktop app (PySide6) ---
+PySide6>=6.6
+mss>=9                    # capture layar regional
+pynput>=1.7               # hotkey global
+pyperclip>=1.8
+
+# --- Util ---
+requests>=2.32

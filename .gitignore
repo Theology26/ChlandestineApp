@@ -1,0 +1,148 @@
+# =====================================================================
+#  Chlandestine — .gitignore
+#
+#  Hanya source code yang di-commit. Model, dataset, dan environment
+#  lokal TIDAK pernah ikut ke repository.
+# =====================================================================
+
+
+# ==============================
+# KREDENSIAL & DATA SENSITIF
+# ==============================
+config/
+db/
+*.sql
+*.env
+.env
+.env.*
+*.pem
+*.key
+*.p12
+secrets*.json
+credentials*.json
+Password & Nama Akun.txt
+
+# ==============================
+# PROYEK PHP LAMA (tidak dipakai)
+# ==============================
+# Aplikasi desktop ini berdiri sendiri: tanpa database, tanpa login,
+# tanpa template admin. Semua yang terkait proyek PHP lama tidak
+# relevan dan sengaja tidak ikut ke repository ini.
+api/
+assets/
+helpers/
+*.php
+
+# ==============================
+# LOG & OUTPUT
+# ==============================
+*.log
+logs/
+ocr_debug.log
+php_error.log
+debug/
+ocr_resp.json
+test_integration.py
+measure_resources.py
+probe_*.py
+sweep_*.py
+tune_*.py
+verify_*.py
+analyze_*.py
+
+# ==============================
+# MODEL & BOBOT  (puluhan GB)
+# ==============================
+models/
+ocrmodels/
+weights/
+runs/
+samples/
+*.pt
+*.pth
+*.bin
+*.safetensors
+*.onnx
+*.engine
+EasyOCR/saved_models/
+EasyOCR/.git/
+
+# ==============================
+# DATASET
+# ==============================
+dataset/
+datasets/
+data/
+*.parquet
+
+# ==============================
+# PYTHON
+# ==============================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+downloads/
+eggs/
+.eggs/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+__pypackages__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.venv/
+venv/
+venv-*/
+env/
+ENV/
+
+# ==============================
+# TEMPLATE PIHAK KETIGA
+# ==============================
+# ~2.000 file template AdminLTE. Tidak dipakai langsung oleh app ini,
+# dan lisensinya terpisah — jangan ikut di-commit.
+dashboard/
+vendor/
+node_modules/
+bower_components/
+
+# ==============================
+# BUILD & LAIN-LAIN
+# ==============================
+*.spec
+pibuild/
+.ropeproject/
+
+# ==============================
+# IDE / EDITOR
+# ==============================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ==============================
+# SISTEM OPERASI
+# ==============================
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+System Volume Information/
