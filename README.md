@@ -22,25 +22,40 @@ text** so you can paste the translation back in.
 
 No API key. No account. No network calls. Everything runs locally on your GPU.
 
-```
-   ┌──────────────── your screen ────────────────┐
-   │                                             │
-   │      ┌──────────────┐                       │
-   │      │ 우리 집은       │  ← drag-select      │
-   │      │ 아빠 안 계서.  │                       │
-   │      └──────────────┘                       │
-   │                                             │
-   └─────────────────────────────────────────────┘
-                     ↓  Ctrl + Alt + T
-   ┌─────────────────────────────────────────────┐
-   │  ▢ Rumah kami            [conf 100%]        │
-   │    Ayahnya ada di rumah.                    │
-   │                                             │
-   │  ▢ Kakak, kenapa kau berbohong lagi?       │
-   │                                             │
-   │            [ Lihat hasil ]  [ Salin semua ] │
-   └─────────────────────────────────────────────┘
-```
+**1 — Press `Ctrl + Alt + T`, then drag over the panel you want to read**
+
+<table>
+<tr>
+<td width="50%" align="center" valign="middle">
+
+**Source** · Korean webtoon
+
+<br><br>
+
+우리 집은<br>
+아빠 안 계서.
+
+</td>
+<td width="50%" align="center" valign="middle">
+
+**Result** · floating panel, always on top
+
+<br><br>
+
+▢ <b>Rumah kami</b> <sub>conf 100%</sub><br>
+&nbsp;&nbsp;Ayahnya ada di rumah.<br><br>
+▢ <b>Kakak, kenapa kau berbohong lagi?</b>
+
+<br><br>
+
+<code>Lihat hasil</code> &nbsp; <code>Salin semua</code>
+
+</td>
+</tr>
+</table>
+
+The original Korean text is **erased from the image**, so the translation can
+be pasted straight back in.
 
 ---
 
@@ -223,14 +238,26 @@ repo for the full explanation.
 
 ## Architecture
 
-```
-desktop_app.py ──┐
-                 ├──► process_image()  ──► YOLOv8s ──► EasyOCR ──► NLLB-1.3B ──► OpenCV inpaint
-FastAPI  ────────┘        (main.py)
-```
+Two frontends, one pipeline:
 
-One pipeline, two frontends. The HTTP endpoint is a ~20-line wrapper, so the
-desktop app and the API can never drift apart.
+| Frontend | Entry point |
+|---|---|
+| `desktop_app.py` | Floating always-on-top panel (PySide6) |
+| FastAPI | `POST /ocr_bubble` — a ~20-line wrapper |
+
+Both call the **same** function, so the desktop app and the API can never
+drift apart:
+
+```
+process_image(cv_img)  ->  main.py
+   |
+   +-- 1. YOLOv8s ....... locate speech bubbles
+   +-- 2. EasyOCR ....... read the Korean text
+   +-- 3. NLLB-1.3B .... translate to Indonesian
+   +-- 4. OpenCV ....... erase the original text
+   |
+   +-- returns { bubbles, script, replaced_file, ... }
+```
 
 | File | Role |
 |---|---|
